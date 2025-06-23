@@ -1,22 +1,39 @@
-{% set name = "structure-threader" %}
+{% set name = "structure_threader" %}
 {% set version = "2.0.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/structure_threader-{{ version }}.tar.gz
+  sha256: 6da669746359c5ac4d829a6ba69523eba3344411d788aef6c360c1edb84e1bfe
+
 build:
   number: 1
   noarch: generic
-  entry_points: []
-  string: null
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --no-cache-dir -vvv
   run_exports:
-    - {{ pin_subpackage('structure-threader', max_pin="x") }}
+    - {{ pin_subpackage('structure_threader', max_pin="x") }}
 
 requirements:
-  build: []
+  host:
+    - python >=3.9, <3.12
+    - pip
+    - setuptools
   run:
-    - structure_threader
+    - python >=3.9, <3.12
+    - plotly >=5.24.0, <6.0.0
+    - numpy >=1.12.1
+    - colorlover >=0.3.0
+    - matplotlib-base >=1.4
+    - clumppling >=0.3.2
+    - structure >=2.3.4
+    - faststructure >=1.0-6
+    - maverick >=1.0.5
+    - r-base >=4.3.0, <4.5.0a0
+    - r-devtools >=2.4.0
+    - r-biocmanager >=1.30.26
 
 test:
   imports:
@@ -36,8 +53,6 @@ about:
   doc_url: "https://structure-threader.readthedocs.io/en/latest/"
 
 extra:
-  copy_test_source_files: true
-  final: true
   recipe-maintainers:
     - StuntsPT
     - fonors
